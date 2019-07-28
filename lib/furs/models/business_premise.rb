@@ -5,9 +5,9 @@ module Furs
 			attr_accessor :tax_number, :business_premise_i_d, :b_p_identifier, :validity_date, :software_supplier, :special_notes, :closing_tag
 
 			validates :tax_number, presence: true, length: { is: 8 }
-			validates :business_premise_i_d, presence: true, format: /\A[a-zA-Z0-9]{1,20}\z/
+			validates :business_premise_i_d, presence: true, format: Furs::Constant::ALPHANUMERIC_REGEX, length: 1..20
 			validates :b_p_identifier, presence: true
-			validates :validity_date, presence: true, format: /\A\d{4}\-[0-1]\d\-[0-3]\d\z/
+			validates :validity_date, presence: true, format: Furs::Constant::DATE_REGEX
 			validates :closing_tag, allow_nil: true, inclusion: { in: %w(Z) }
 			validates :special_notes, allow_nil: true, length: 1..100
 			validates :software_supplier, presence: true, length: { minimum: 1 }

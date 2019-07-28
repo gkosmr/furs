@@ -10,6 +10,7 @@ module Furs
 		HEADERS = { "Content-Type" => "application/json; charset=UTF-8" }
 		ECHO_PATH = "/v1/cash_registers/echo"
 		BUSINESS_PREMISE_PATH = "/v1/cash_registers/invoices/register"
+		INVOICE_PATH = "/v1/cash_registers/invoices"
 
 		def initialize config
 			@config = config
@@ -17,42 +18,54 @@ module Furs
 
 		# debug_output: $stdout
 		def echo data
-			response = Furs::Client.post( 
-				url(ECHO_PATH), 
-				headers: HEADERS, 
-				body: data.to_json, 
-				p12: File.read(config.certificate_path), 
-				p12_password: config.certificate_password,
-				cert_store: cert_store
-			)
-			objectify(response.body)
+			request ECHO_PATH, data
 		end
 
 		def register_business_premise data
-			response = Furs::Client.post( 
-				url(BUSINESS_PREMISE_PATH), 
-				headers: HEADERS, 
-				body: body(data), 
-				p12: File.read(config.certificate_path), 
-				p12_password: config.certificate_password,
-				cert_store: cert_store
-				# debug_output: $stdout
-			)
-			header, payload = Furs::Decoder.new(objectify(response.body).token, config.sign_cert).decode
-
-			parsed_header = parse(header)
-			parsed_payload = parse(payload)
-
-			validate_result! parsed_payload
-
-			objectify({ header: parsed_header, payload: parsed_payload })
+			signed_request BUSINESS_PREMISE_PATH, data
 		end
 
 		def issue_invoice data
-			fail Exceptions::NotImplemented
+			signed_request INVOICE_PATH, data
 		end
 
 		private
+
+			def request path, data
+				fail(Exceptions::InvalidData, "Data is invalid: #{data.errors_hash}") unless data.valid?
+				
+				response = Furs::Client.post( 
+					url(path), 
+					headers: HEADERS, 
+					body: data.to_json, 
+					p12: File.read(config.certificate_path), 
+					p12_password: config.certificate_password,
+					cert_store: cert_store
+				)
+				objectify(response.body)
+			end
+
+			def signed_request path, data
+				fail(Exceptions::InvalidData, "Data is invalid: #{data.errors_hash}") unless data.valid?
+
+				response = Furs::Client.post( 
+					url(path), 
+					headers: HEADERS, 
+					body: body(data), 
+					p12: File.read(config.certificate_path), 
+					p12_password: config.certificate_password,
+					cert_store: cert_store
+					# debug_output: $stdout
+				)
+				header, payload = Furs::Decoder.new(objectify(response.body).token, config.sign_cert).decode
+
+				parsed_header = parse(header)
+				parsed_payload = parse(payload)
+
+				validate_result! parsed_payload
+
+				objectify({ header: parsed_header, payload: parsed_payload })
+			end
 
 			def url path
 				"#{config.base_url}#{path}"

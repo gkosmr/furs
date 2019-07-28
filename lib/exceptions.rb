@@ -5,4 +5,5 @@ module Exceptions
   class JwtInvalidSignature < Exception; end
   class ResponseError < Exception; end
   class NotImplemented < Exception; end
+  class InvalidData < Exception; end
 end

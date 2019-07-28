@@ -29,7 +29,16 @@ module Furs
 		    end
 
 		    def valid?
-		    	super && self.instance_variables.map{ |attribute| self.instance_variable_get(attribute) }.select{ |val| val.class < Furs::Models::BaseRequest }.all?{ |val| val.nil? || val.valid? }
+		    	super && base_request_objects.all?{ |_, val| val.nil? || val.valid? }
+		    end
+
+		    def errors_hash
+		    	hsh = errors.messages
+		    	base_request_objects.each do |field, val|
+		    		msgs = val.errors.messages
+		    		hsh[field] = msgs unless msgs.empty?
+		    	end
+		    	hsh
 		    end
 
 		    def empty?
@@ -43,6 +52,10 @@ module Furs
 
 		    	def to_val tmp
 		    		tmp.class < Furs::Models::BaseRequest ? tmp.as_json : tmp
+		    	end
+
+		    	def base_request_objects
+		    		self.instance_variables.map{ |attribute| [attribute.to_s.gsub('@', ''), self.instance_variable_get(attribute)] }.select{ |_,val| val.class < Furs::Models::BaseRequest }.to_h
 		    	end
 	    end
 	end

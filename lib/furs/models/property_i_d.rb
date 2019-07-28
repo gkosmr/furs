@@ -4,9 +4,9 @@ module Furs
 
 			attr_accessor :cadastral_number, :building_number, :building_section_number
 
-			validates :cadastral_number, presence: true, format: /\A\d{1,4}\z/
-			validates :building_number, presence: true, format: /\A\d{1,5}\z/
-			validates :building_section_number, presence: true, format: /\A\d{1,4}\z/
+			validates :cadastral_number, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 10000 }
+			validates :building_number, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 100000 }
+			validates :building_section_number, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 10000 }
 
 			def initialize cn = nil, bn = nil, bsn = nil
 				@cadastral_number = cn
