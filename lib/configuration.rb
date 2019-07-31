@@ -1,7 +1,7 @@
 module Furs
   class Configuration
 
-    attr_accessor :base_url, :certificate_path, :certificate_password, :tls_ca_path, :sign_cert
+    attr_accessor :base_url, :certificate_path, :certificate_password, :tls_ca_path, :sign_cert, :tax_number
     # :tls_cert_path
 
     def initialize
@@ -11,6 +11,7 @@ module Furs
       # @tls_cert_path = ENV['FURS_TLS_CERT_PATH']      # might not be needed!!
       @tls_ca_path = ENV['FURS_TLS_CA_PATH']
       @sign_cert = ENV['FURS_SIGN_CERT']
+      @tax_number = ENV['FURST_TAX_NUMBER']
     end
 
   end

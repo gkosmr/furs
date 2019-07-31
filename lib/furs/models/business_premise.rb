@@ -2,24 +2,24 @@ module Furs
 	module Models
 		class BusinessPremise < Furs::Models::BaseRequest
 
-			attr_accessor :tax_number, :business_premise_i_d, :b_p_identifier, :validity_date, :software_supplier, :special_notes, :closing_tag
+			attr_accessor :business_premise_i_d, :b_p_identifier, :validity_date, :software_supplier, :special_notes, :closing_tag
+			attr_reader :tax_number
 
-			validates :tax_number, presence: true, length: { is: 8 }
+			validates :tax_number, presence: true, length: { is: 8 }, numericality: { only_integer: true }
 			validates :business_premise_i_d, presence: true, format: Furs::Constant::ALPHANUMERIC_REGEX, length: 1..20
 			validates :b_p_identifier, presence: true
 			validates :validity_date, presence: true, format: Furs::Constant::DATE_REGEX
 			validates :closing_tag, allow_nil: true, inclusion: { in: %w(Z) }
 			validates :special_notes, allow_nil: true, length: 1..100
 			validates :software_supplier, presence: true, length: { minimum: 1 }
-
-			def initialize
-				@b_p_identifier = Furs::Models::BPIdentifier.new
-				@software_supplier = []
+			validate do
+				errors.add(:software_supplier, 'must be an array') unless software_supplier.is_a?(Array)
 			end
 
-			# TODO
-			def add_sofware_supplier sp
-				software_supplier << sp
+			def initialize
+				@tax_number = Furs.config.tax_number.to_i
+				@b_p_identifier = Furs::Models::BPIdentifier.new
+				@software_supplier = []
 			end
 		end
 	end

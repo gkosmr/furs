@@ -22,11 +22,11 @@ module Furs
 		end
 
 		def register_business_premise data
-			signed_request BUSINESS_PREMISE_PATH, data
+			signed_request BUSINESS_PREMISE_PATH, data, Furs::Models::BusinessPremiseResponse
 		end
 
 		def issue_invoice data
-			signed_request INVOICE_PATH, data
+			signed_request INVOICE_PATH, data, Furs::Models::InvoiceResponse
 		end
 
 		private
@@ -42,10 +42,10 @@ module Furs
 					p12_password: config.certificate_password,
 					cert_store: cert_store
 				)
-				objectify(response.body)
+				JSON.parse(response.body)['EchoResponse']
 			end
 
-			def signed_request path, data
+			def signed_request path, data, response_class
 				fail(Exceptions::InvalidData, "Data is invalid: #{data.errors_hash}") unless data.valid?
 
 				response = Furs::Client.post( 
@@ -57,14 +57,8 @@ module Furs
 					cert_store: cert_store
 					# debug_output: $stdout
 				)
-				header, payload = Furs::Decoder.new(objectify(response.body).token, config.sign_cert).decode
-
-				parsed_header = parse(header)
-				parsed_payload = parse(payload)
-
-				validate_result! parsed_payload
-
-				objectify({ header: parsed_header, payload: parsed_payload })
+				h, p = Furs::Decoder.new(objectify(response.body).token, config.sign_cert).decode
+				response_class.initialize_from_hash JSON.parse(p)[response_class.to_s.split('::').last]
 			end
 
 			def url path
@@ -99,11 +93,6 @@ module Furs
 				# fail(Exceptions::CannotVerifyTls, 'Can\'t verify TLS CA') unless cert_store.verify(cert)
 				# cert_store.add_file(config.tls_cert_path)
 				cert_store
-			end
-
-			def validate_result! data
-				error_data = data['business_premise_response']['error']
-				fail(Exceptions::ResponseError, "#{error_data['error_code']} | #{error_data['error_message']}") if error_data.present?
 			end
 	end
 end

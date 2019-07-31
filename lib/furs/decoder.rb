@@ -42,7 +42,7 @@ module Furs
 
 		def verify_token_signature!
 			cert = OpenSSL::X509::Certificate.new File.read(@sign_cert_path)
-			fail(Exceptions::JwtInvalidSignature, 'Cannot verify the response') unless cert.public_key.verify(@algorithm.gsub('RS', 'sha'), decode64(signature_segment), [header_segment, payload_segment].join(".") ) 
+			fail(Exceptions::JwtInvalidCertificate, 'Cannot verify the response') unless cert.public_key.verify(@algorithm.gsub('RS', 'sha'), decode64(signature_segment), [header_segment, payload_segment].join(".") ) 
 		end
 	end
 end

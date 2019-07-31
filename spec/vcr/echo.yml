@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://blagajne-test.fu.gov.si:9002/v1/cash_registers/echo
+    body:
+      encoding: UTF-8
+      string: '{"EchoRequest":"Test Echo"}'
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Host:
+      - blagajne-test.fu.gov.si:9002
+      Content-Length:
+      - '69'
+      X-Forwarded-For:
+      - 89.212.86.107
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - origin, x-requested-with, Content-Type, accept
+      Access-Control-Max-Age:
+      - '3628800'
+      Access-Control-Allow-Methods:
+      - GET, PUT, POST, DELETE
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - TS016b9802=01a25b10d8909e0390eaa4ed8e14a800e1a8bfefa2c068f68cd4d1f04e11b24c99d3e933f6;
+        Path=/
+    body:
+      encoding: UTF-8
+      string: "\n        {\n            \"EchoResponse\": \"Test Echo\"\n        }\n
+        \       "
+    http_version: 
+  recorded_at: Wed, 31 Jul 2019 20:03:19 GMT
+recorded_with: VCR 5.0.0

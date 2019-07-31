@@ -10,7 +10,7 @@ module Furs
 			def initialize bpid = nil, edid = nil, inum = nil
 				@business_premise_i_d = bpid
 				@electronic_device_i_d = edid
-				@invoice_number = inum
+				@invoice_number = inum.to_s
 			end
 		end
 	end

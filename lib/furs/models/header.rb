@@ -1,8 +1,9 @@
 module Furs
 	module Models
 		class Header < Furs::Models::BaseRequest
+			extend Furs::Models::InitializableFromHash
 
-			attr_reader :message_i_d, :date_time
+			attr_accessor :message_i_d, :date_time
 
 			validates :message_i_d, presence: true, format: Furs::Constant::UUID_REGEX
 			validates :date_time, presence: true, format: Furs::Constant::DATE_TIME_REGEX
