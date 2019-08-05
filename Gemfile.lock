@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    furs (0.4.0)
+    furs (0.5.1)
       activemodel
       activesupport
       httparty (~> 0.17.0)

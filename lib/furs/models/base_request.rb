@@ -32,7 +32,7 @@ module Furs
 
 		    def valid?
 		    	base_valid = super
-		    	objects_valid = base_request_objects.all?{ |_, val| val.nil? || val.valid? }
+		    	objects_valid = base_request_objects.all?{ |_, val| val.empty? || val.valid? }
 		    	arrays_valid = arrays.all?{ |_,arr| arr.compact.all?(&:valid?) }
 		    	base_valid && objects_valid && arrays_valid
 		    end
