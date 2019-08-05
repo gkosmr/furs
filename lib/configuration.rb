@@ -11,7 +11,7 @@ module Furs
       # @tls_cert_path = ENV['FURS_TLS_CERT_PATH']      # might not be needed!!
       @tls_ca_path = ENV['FURS_TLS_CA_PATH']
       @sign_cert = ENV['FURS_SIGN_CERT']
-      @tax_number = ENV['FURST_TAX_NUMBER']
+      @tax_number = ENV['FURS_TAX_NUMBER']
     end
 
   end
