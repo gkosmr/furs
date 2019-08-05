@@ -18,7 +18,7 @@ module Furs
 	            		hsh.merge( key => tmp.map{ |el| to_val(el) } )
 	            	else
 		            	val = to_val(tmp)
-		            	val.nil? || %w(Root Errors).include?(key) || ( val.is_a?(Array) && val.length == 0 ) || ( tmp.class < Furs::Models::BaseRequest && tmp.empty? ) ? hsh : hsh.merge( key => val )
+		            	val.blank? || %w(Root Errors).include?(key) || ( val.is_a?(Array) && val.length == 0 ) || ( tmp.class < Furs::Models::BaseRequest && tmp.empty? ) ? hsh : hsh.merge( key => val )
 	            	end
 	            end
 
@@ -48,7 +48,7 @@ module Furs
 		    def empty?
 		    	self.instance_variables.all? do |attribute| 
 		    		val = self.instance_variable_get(attribute)
-		    		val.nil? || ( val.kind_of?(Array) && val.empty? ) || ( val.class < Furs::Models::BaseRequest && val.empty? )
+		    		val.blank? || ( val.kind_of?(Array) && val.empty? ) || ( val.class < Furs::Models::BaseRequest && val.empty? )
 		    	end
 		    end
 

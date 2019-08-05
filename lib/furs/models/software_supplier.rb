@@ -7,7 +7,7 @@ module Furs
 			validates :tax_number, allow_blank: true, length: { is: 8 }
 			validates :name_foreign, allow_blank: true, length: 1..1000
 			validate do
-				errors.add(:base, 'Only one of the fields can be blank') if (tax_number.nil? && name_foreign.nil?) || (!tax_number.nil? && !name_foreign.nil?)
+				errors.add(:base, 'Only one of the fields can be blank') if (tax_number.blank? && name_foreign.blank?) || (!tax_number.blank? && !name_foreign.blank?)
 			end
 
 			def initialize tn = nil, nm = nil
