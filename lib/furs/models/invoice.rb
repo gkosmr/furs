@@ -7,8 +7,8 @@ module Furs
 			validates :issue_date_time, presence: true, format: Furs::Constant::DATE_TIME_REGEX
 			validates :numbering_structure, presence: true, inclusion: { in: %w(B C) }
 			validates :invoice_identifier, presence: true
-			validates :operator_tax_number, allow_nil: true, length: { is: 8 }
-			validates :foreign_operator, :subsequent_submit, allow_nil: true, inclusion: { in: [0,1] }
+			validates :operator_tax_number, allow_blank: true, length: { is: 8 }
+			validates :foreign_operator, :subsequent_submit, allow_blank: true, inclusion: { in: [0,1] }
 			validates :protected_i_d, presence: true, format: Furs::Constant::HEXADECIMAL_REGEX, length: { is: 32 }
 
 			def initialize

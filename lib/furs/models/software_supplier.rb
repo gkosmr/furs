@@ -4,8 +4,8 @@ module Furs
 
 			attr_accessor :tax_number, :name_foreign
 
-			validates :tax_number, allow_nil: true, length: { is: 8 }
-			validates :name_foreign, allow_nil: true, length: 1..1000
+			validates :tax_number, allow_blank: true, length: { is: 8 }
+			validates :name_foreign, allow_blank: true, length: 1..1000
 			validate do
 				errors.add(:base, 'Only one of the fields can be blank') if (tax_number.nil? && name_foreign.nil?) || (!tax_number.nil? && !name_foreign.nil?)
 			end

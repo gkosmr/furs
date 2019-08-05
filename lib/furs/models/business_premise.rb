@@ -9,8 +9,8 @@ module Furs
 			validates :business_premise_i_d, presence: true, format: Furs::Constant::ALPHANUMERIC_REGEX, length: 1..20
 			validates :b_p_identifier, presence: true
 			validates :validity_date, presence: true, format: Furs::Constant::DATE_REGEX
-			validates :closing_tag, allow_nil: true, inclusion: { in: %w(Z) }
-			validates :special_notes, allow_nil: true, length: 1..100
+			validates :closing_tag, allow_blank: true, inclusion: { in: %w(Z) }
+			validates :special_notes, allow_blank: true, length: 1..100
 			validates :software_supplier, presence: true, length: { minimum: 1 }
 			validate do
 				errors.add(:software_supplier, 'must be an array') unless software_supplier.is_a?(Array)

@@ -6,7 +6,7 @@ module Furs
 
 			validates :street, :community, presence: true, length: 1..100
 			validates :house_number, presence: true, length: 1..10
-			validates :house_number_additional, allow_nil: true, length: 1..10
+			validates :house_number_additional, allow_blank: true, length: 1..10
 			validates :city, presence: true, length: 1..40
 			validates :postal_code, presence: true, length: { is: 4 }
 
