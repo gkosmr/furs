@@ -56,7 +56,9 @@ module Furs
 		    private
 
 		    	def to_val tmp, attr
-		    		if tmp.class < Furs::Models::BaseRequest 
+		    		if tmp.blank?
+		    			nil
+		    		elsif tmp.class < Furs::Models::BaseRequest 
 		    			tmp.as_json
 		    		elsif is_int? attr
 		    			tmp.to_i
