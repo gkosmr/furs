@@ -12,12 +12,13 @@ module Furs
 
 			def as_json
 	            data = self.instance_variables.inject({}) do |hsh, attribute| 
-	            	key = attribute.to_s.gsub('@','').camelize
+	            	attr = attribute.to_s.gsub('@','') 
+	            	key = attr.camelize
 	            	tmp = self.instance_variable_get(attribute)
 	            	if tmp.is_a?(Array) && !tmp.empty?
-	            		hsh.merge( key => tmp.map{ |el| to_val(el) } )
+	            		hsh.merge( key => tmp.map{ |el| to_val(el, attr) } )
 	            	else
-		            	val = to_val(tmp)
+		            	val = to_val(tmp, attr)
 		            	val.blank? || %w(Root Errors).include?(key) || ( val.is_a?(Array) && val.length == 0 ) || ( tmp.class < Furs::Models::BaseRequest && tmp.empty? ) ? hsh : hsh.merge( key => val )
 	            	end
 	            end
@@ -54,8 +55,16 @@ module Furs
 
 		    private
 
-		    	def to_val tmp
-		    		tmp.class < Furs::Models::BaseRequest ? tmp.as_json : tmp
+		    	def to_val tmp, attr
+		    		if tmp.class < Furs::Models::BaseRequest 
+		    			tmp.as_json
+		    		elsif is_int? attr
+		    			tmp.to_i
+		    		elsif is_decimal? attr
+		    			tmp.to_f
+		    		else 
+		    			tmp.to_s
+		    		end
 		    	end
 
 		    	def base_request_objects
@@ -64,6 +73,22 @@ module Furs
 
 		    	def arrays
 		    		self.instance_variables.map{ |attribute| [attribute.to_s.gsub('@', ''), self.instance_variable_get(attribute)] }.select{ |_,val| val.kind_of?(Array) }.to_h
+		    	end
+
+		    	def int_fields
+		    		[]
+		    	end
+
+		    	def decimal_fields
+		    		[]
+		    	end
+
+		    	def is_int? attr
+		    		int_fields.include? attr
+		    	end
+
+		    	def is_decimal? attr
+		    		decimal_fields.include? attr
 		    	end
 	    end
 	end

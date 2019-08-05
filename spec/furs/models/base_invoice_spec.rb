@@ -78,4 +78,16 @@ RSpec.describe Furs::Models::BaseInvoice do
 	it 'raises exception if trying to set header' do
 		expect{ build(:base_invoice).tax_number = 12312312 }.to raise_error(NoMethodError)
 	end
+
+	it 'it converts int_fields to int in json' do
+		base_invoice = build(:base_invoice)
+		data = base_invoice.as_json
+		expect(data['TaxNumber']).to be_a_kind_of(Integer)
+	end
+
+	it 'it converts decimal_fields to decimal in json' do
+		base_invoice = build(:base_invoice, payment_amount: '123.12')
+		data = base_invoice.as_json
+		expect(data['PaymentAmount']).to be_a_kind_of(Float)
+	end
 end

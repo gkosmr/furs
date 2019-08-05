@@ -60,4 +60,10 @@ RSpec.describe Furs::Models::PropertyID do
 	it 'is not valid if building_section_number is greater or equal than 10000' do 
 		expect(build :property_i_d, building_section_number: 10000).not_to be_valid
 	end
+
+	it 'it converts int_fields to int in json' do
+		property_i_d = build(:property_i_d, building_number: '123')
+		data = property_i_d.as_json
+		expect(data['BuildingNumber']).to be_a_kind_of(Integer)
+	end
 end

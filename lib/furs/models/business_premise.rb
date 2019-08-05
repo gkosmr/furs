@@ -17,9 +17,13 @@ module Furs
 			end
 
 			def initialize
-				@tax_number = Furs.config.tax_number.to_i
+				@tax_number = Furs.config.tax_number
 				@b_p_identifier = Furs::Models::BPIdentifier.new
 				@software_supplier = []
+			end
+
+			def int_fields
+				%w(tax_number)
 			end
 		end
 	end

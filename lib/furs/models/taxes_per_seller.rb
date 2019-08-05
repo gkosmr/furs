@@ -16,6 +16,14 @@ module Furs
 				@v_a_t = []	#Furs::Models::VAT.new
 				@flat_rate_compensation = [] #Furs::Models::FlatRateCompensation.new
 			end
+
+			def int_fields
+				%w(seller_tax_number)
+			end
+
+			def decimal_fields
+				%w(other_taxes_amount exempt_v_a_t_taxable_amount reverse_v_a_t_taxable_amount non_taxable_amount special_tax_rules_amount)
+			end
 		end
 	end
 end

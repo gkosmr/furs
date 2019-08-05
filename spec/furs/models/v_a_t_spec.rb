@@ -23,4 +23,10 @@ RSpec.describe Furs::Models::VAT do
 			expect(build :v_a_t, key => limit).not_to be_valid
 		end
 	end
+
+	it 'it converts decimal_fields to decimal in json' do
+		v_a_t = build(:v_a_t, tax_amount: '123.12')
+		data = v_a_t.as_json
+		expect(data['TaxAmount']).to be_a_kind_of(Float)
+	end
 end

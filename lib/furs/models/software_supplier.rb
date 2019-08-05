@@ -14,6 +14,10 @@ module Furs
 				@tax_number = tn
 				@name_foreign = nm
 			end
+
+			def int_fields
+				%w(tax_number)
+			end
 		end
 	end
 end

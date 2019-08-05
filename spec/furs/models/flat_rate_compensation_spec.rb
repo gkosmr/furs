@@ -23,4 +23,16 @@ RSpec.describe Furs::Models::FlatRateCompensation do
 			expect(build :flat_rate_compensation, key => limit).not_to be_valid
 		end
 	end
+
+	it 'it converts int_fields to int in json' do
+		base_invoice = build(:base_invoice)
+		data = base_invoice.as_json
+		expect(data['TaxNumber']).to be_a_kind_of(Integer)
+	end
+
+	it 'it converts decimal_fields to decimal in json' do
+		flat_rate_compensation = build(:flat_rate_compensation, flat_rate_rate: '123.12')
+		data = flat_rate_compensation.as_json
+		expect(data['FlatRateRate']).to be_a_kind_of(Float)
+	end
 end

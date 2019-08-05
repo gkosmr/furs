@@ -27,4 +27,10 @@ RSpec.describe Furs::Models::SoftwareSupplier do
 	it 'is not valid if name_foreign has more than 1000 characters' do 
 		expect(build :foreign_software_supplier, name_foreign: 'a'*1001).not_to be_valid
 	end
+
+	it 'it converts int_fields to int in json' do
+		domestic_software_supplier = build(:domestic_software_supplier, tax_number: '12312312')
+		data = domestic_software_supplier.as_json
+		expect(data['TaxNumber']).to be_a_kind_of(Integer)
+	end
 end

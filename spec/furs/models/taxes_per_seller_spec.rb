@@ -46,4 +46,16 @@ RSpec.describe Furs::Models::TaxesPerSeller do
 			expect(build :taxes_per_seller, attr => 1000000000000).not_to be_valid
 		end
 	end
+
+	it 'it converts int_fields to int in json' do
+		taxes_per_seller = build(:taxes_per_seller, seller_tax_number: '12312312')
+		data = taxes_per_seller.as_json
+		expect(data['SellerTaxNumber']).to be_a_kind_of(Integer)
+	end
+
+	it 'it converts decimal_fields to decimal in json' do
+		taxes_per_seller = build(:taxes_per_seller, non_taxable_amount: '123.12')
+		data = taxes_per_seller.as_json
+		expect(data['NonTaxableAmount']).to be_a_kind_of(Float)
+	end
 end

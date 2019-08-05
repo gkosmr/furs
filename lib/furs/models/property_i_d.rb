@@ -12,6 +12,10 @@ module Furs
 				@building_number = bn
 				@building_section_number = bsn
 			end
+
+			def int_fields
+				%w(cadastral_number building_number building_section_number)
+			end
 		end
 	end
 end

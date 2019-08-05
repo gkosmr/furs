@@ -70,4 +70,10 @@ RSpec.describe Furs::Models::Invoice do
 		expect(build :invoice, protected_i_d: id + 'x').not_to be_valid
 	end
 
+	it 'it converts int_fields to int in json' do
+		invoice = build(:invoice, operator_tax_number: '12312312')
+		data = invoice.as_json
+		expect(data['OperatorTaxNumber']).to eq(12312312)
+	end
+
 end

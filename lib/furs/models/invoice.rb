@@ -15,6 +15,10 @@ module Furs
 				super
 				@invoice_identifier = Furs::Models::InvoiceIdentifier.new
 			end
+
+			def int_fields
+				%w(operator_tax_number)
+			end
 		end
 	end
 end

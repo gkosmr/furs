@@ -87,4 +87,10 @@ RSpec.describe Furs::Models::BusinessPremise do
 		invalid_software_supplier = [build(:software_supplier, tax_number: 1234)]
 		expect(build :business_premise, software_supplier: invalid_software_supplier).not_to be_valid
 	end
+
+	it 'it converts int_fields to int in json' do
+		business_premise = build(:business_premise)
+		data = business_premise.as_json
+		expect(data['TaxNumber']).to be_a_kind_of(Integer)
+	end
 end

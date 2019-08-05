@@ -18,10 +18,18 @@ module Furs
 			end
 
 			def initialize
-				@tax_number = Furs.config.tax_number.to_i
+				@tax_number = Furs.config.tax_number
 				@taxes_per_seller = []
 				@reference_sales_book = Furs::Models::ReferenceSalesBook.new
 				@reference_invoice = Furs::Models::ReferenceInvoice.new
+			end
+
+			def int_fields
+				%w(tax_number)
+			end
+
+			def decimal_fields
+				%w(invoice_amount payment_amount returns_amount)
 			end
 		end
 	end
