@@ -6,6 +6,7 @@ module Furs
 	module Models
 		class BaseRequest
 			include ActiveModel::Validations
+			extend Furs::Models::InitializableFromHash
 
 			attr_reader :root
 

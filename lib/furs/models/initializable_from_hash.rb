@@ -15,7 +15,7 @@ module Furs
 					else
 						value = val
 					end
-					obj.send "#{field}=", value
+					obj.instance_variable_set "@#{field}", value
 				end
 				obj
 			end

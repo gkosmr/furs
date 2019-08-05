@@ -1,7 +1,6 @@
 module Furs
 	module Models
 		class Header < Furs::Models::BaseRequest
-			extend Furs::Models::InitializableFromHash
 
 			attr_accessor :message_i_d, :date_time
 

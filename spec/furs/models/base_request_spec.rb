@@ -58,4 +58,9 @@ RSpec.describe Furs::Models::BaseRequest do
 		expect(build(:real_estate_b_p, property_i_d: build(:property_i_d, cadastral_number: nil, building_number: nil, building_section_number: nil), address: nil).empty?).to be(true)
 		expect(build(:real_estate_b_p, property_i_d: build(:property_i_d, cadastral_number: 12, building_number: nil, building_section_number: nil), address: nil).empty?).to be(false)
 	end
+
+	
+	it 'responds to class method initialize_from_hash' do
+		expect(Furs::Models::BaseRequest).to respond_to(:initialize_from_hash).with(1).argument
+	end
 end
