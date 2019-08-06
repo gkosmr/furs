@@ -6,7 +6,8 @@ module Furs
 
 			validates :root, presence: true, inclusion: { in: ['InvoiceRequest'] }
 			validate do
-				errors.add(:base, 'Only one of the fields can be blank') if ((invoice.nil? || invoice.empty?) && (sales_book_invoice.nil? || sales_book_invoice.empty?)) || (!(invoice.nil? || invoice.empty?) && !(sales_book_invoice.nil? || sales_book_invoice.empty?))
+				errors.add(:invoice, 'can\'t be blank if Sales book invoice is also blank') if (invoice.nil? || invoice.empty?) && (sales_book_invoice.nil? || sales_book_invoice.empty?)
+				errors.add(:sales_book_invoice, 'must be blank if Invoice is not blank') if !(invoice.nil? || invoice.empty?) && !(sales_book_invoice.nil? || sales_book_invoice.empty?)
 			end
 
 			def initialize
