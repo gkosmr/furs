@@ -71,8 +71,8 @@ FactoryBot.define do
     invoice_amount { 66.71 }
     payment_amount { 1047.76 }
     taxes_per_seller{ build_list :taxes_per_seller, 1 }
-    reference_sales_book { nil }
-    reference_invoice { nil }
+    reference_sales_book { [] }
+    reference_invoice { [] }
   end
 
   factory :taxes_per_seller, class: 'Furs::Models::TaxesPerSeller' do

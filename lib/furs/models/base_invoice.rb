@@ -13,15 +13,17 @@ module Furs
 			validates :special_notes, allow_blank: true, length: 1..1000
 
 			validate do
-				errors.add(:reference_invoice, 'must be blank if Reference sales book is not blank') if !(reference_invoice.nil? || reference_invoice.empty?) && !(reference_sales_book.nil? || reference_sales_book.empty?)
+				# errors.add(:reference_invoice, 'must be blank if Reference sales book is not blank') if !(reference_invoice.nil? || reference_invoice.empty?) && !(reference_sales_book.nil? || reference_sales_book.empty?)
 				errors.add(:taxes_per_seller, 'must be an array') unless taxes_per_seller.is_a?(Array)
+				errors.add(:reference_invoice, 'must be an array') unless reference_invoice.is_a?(Array)
+				errors.add(:reference_sales_book, 'must be an array') unless reference_sales_book.is_a?(Array)
 			end
 
 			def initialize
 				@tax_number = Furs.config.tax_number
 				@taxes_per_seller = []
-				@reference_sales_book = Furs::Models::ReferenceSalesBook.new
-				@reference_invoice = Furs::Models::ReferenceInvoice.new
+				@reference_sales_book = []#Furs::Models::ReferenceSalesBook.new
+				@reference_invoice = []#Furs::Models::ReferenceInvoice.new
 			end
 
 			def int_fields

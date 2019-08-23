@@ -10,11 +10,6 @@ RSpec.describe Furs::Models::BaseInvoice do
 		expect(build :base_invoice).to be_valid
 	end
 
-	it 'is not valid if reference_invoice and reference_sales_book are both non-blank' do
-		base_invoice = build :base_invoice, reference_sales_book: build(:reference_sales_book), reference_invoice: build(:reference_invoice)
-		expect(base_invoice).not_to be_valid
-	end
-
 	it 'is not valid if customer_v_a_t_number is longer than 20 characters' do
 		expect(build :base_invoice, customer_v_a_t_number: "123"*7).not_to be_valid
 	end
@@ -59,6 +54,14 @@ RSpec.describe Furs::Models::BaseInvoice do
 		expect(build :base_invoice, taxes_per_seller: build(:taxes_per_seller)).not_to be_valid
 		expect(build :base_invoice, taxes_per_seller: []).not_to be_valid
 		expect(build :base_invoice, taxes_per_seller: '123').not_to be_valid
+	end
+
+	it 'is not valid if reference_invoice is not array' do
+		expect(build :base_invoice, reference_invoice: build(:reference_invoice)).not_to be_valid
+	end
+
+	it 'is not valid if reference_sales_book is not array' do
+		expect(build :base_invoice, reference_sales_book: build(:reference_sales_book)).not_to be_valid
 	end
 
 	it 'is not valid if one of the elements is not valid' do
