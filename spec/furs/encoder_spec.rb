@@ -17,4 +17,14 @@ RSpec.describe Furs::Encoder do
 		expect(token).to eq("eyJoZWFkZXIiOiJ0ZXN0IiwiYWxnIjoiUlMyNTYifQ==.eyJwYXlsb2FkIjoidGVzdCJ9.ZI0oNOOy-guiX7Qc62SYWn_XdsKDT2GTNfIdYTi1J_K2gPjxd8pUvXqWxvXOkOv3Ou_NaPjiJL52phVKAX6_vrpYIvwLIBsOc43jl3Xuts44rlZcaoxIgXM8ipn0PYFxSx-7Qm_y2mWGYVOHjFaL2lznQAePNCGmeJmONtbib9vUZNKCKhXXfZF5QxlFVhm9vb2MRq9Lc5kj-4ynA_wmskpO9y8OpPYD42y1b9FsPhuYdyOieVOoi7GT9amujv56d0tSqTuYm6skcx9qdR6m5efol6c_llztkCyZfY-LSyGNTt7sQTNHxW2hjFqEe6IWlsTIO5kKIM6DkOE4QR37nw==")
 	end
 
+	it 'generates the correct ZOI' do
+		payload = "test"
+		header = nil
+		
+		encoder = Furs::Encoder.new payload, header, private_key
+		zoi = encoder.zoi
+
+		expect(zoi).to eq("c18c3c255df04a885c13c05849b1d6de")
+	end
+
 end

@@ -70,4 +70,14 @@ RSpec.describe Furs::Client do
 	  		expect(obj.header).not_to be(nil)
   		end
   	end
+
+    it '#issue_invoice generates ZOI automatically and receives the right response' do
+      VCR.use_cassette('invoice_without_zoi') do 
+        data = build(:invoice_request, invoice: build(:invoice, protected_i_d: nil))
+        obj = client.issue_invoice data
+        expect(WebMock).to have_requested(:post, Furs.config.base_url+"/v1/cash_registers/invoices").with(headers: { "Content-Type" => "application/json; charset=UTF-8" })
+        expect(obj.error).to be(nil)
+        expect(obj.header).not_to be(nil)
+      end
+    end
 end

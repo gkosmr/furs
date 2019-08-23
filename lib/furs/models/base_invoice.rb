@@ -27,11 +27,11 @@ module Furs
 			end
 
 			def int_fields
-				%w(tax_number)
+				super + %w(tax_number)
 			end
 
 			def decimal_fields
-				%w(invoice_amount payment_amount returns_amount)
+				super + %w(invoice_amount payment_amount returns_amount)
 			end
 		end
 	end

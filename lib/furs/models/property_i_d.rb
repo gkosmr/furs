@@ -14,7 +14,7 @@ module Furs
 			end
 
 			def int_fields
-				%w(cadastral_number building_number building_section_number)
+				super + %w(cadastral_number building_number building_section_number)
 			end
 		end
 	end

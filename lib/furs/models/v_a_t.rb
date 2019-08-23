@@ -11,7 +11,7 @@ module Furs
 			end
 
 			def decimal_fields
-				%w(tax_rate taxable_amount tax_amount)
+				super + %w(tax_rate taxable_amount tax_amount)
 			end
 
 		end

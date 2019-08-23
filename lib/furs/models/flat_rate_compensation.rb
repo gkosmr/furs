@@ -12,7 +12,7 @@ module Furs
 			end
 
 			def decimal_fields
-				%w(flat_rate_rate flat_rate_taxable_amount flat_rate_amount)
+				super + %w(flat_rate_rate flat_rate_taxable_amount flat_rate_amount)
 			end
 
 		end

@@ -26,6 +26,7 @@ module Furs
 		end
 
 		def issue_invoice data
+			data.invoice.generate_zoi!(p12) if data.invoice.present?
 			signed_request INVOICE_PATH, data, Furs::Models::InvoiceResponse
 		end
 

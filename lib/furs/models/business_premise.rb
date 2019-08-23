@@ -23,7 +23,7 @@ module Furs
 			end
 
 			def int_fields
-				%w(tax_number)
+				super + %w(tax_number)
 			end
 		end
 	end

@@ -18,11 +18,11 @@ module Furs
 			end
 
 			def int_fields
-				%w(seller_tax_number)
+				super + %w(seller_tax_number)
 			end
 
 			def decimal_fields
-				%w(other_taxes_amount exempt_v_a_t_taxable_amount reverse_v_a_t_taxable_amount non_taxable_amount special_tax_rules_amount)
+				super + %w(other_taxes_amount exempt_v_a_t_taxable_amount reverse_v_a_t_taxable_amount non_taxable_amount special_tax_rules_amount)
 			end
 		end
 	end

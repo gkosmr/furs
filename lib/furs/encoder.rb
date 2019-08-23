@@ -6,11 +6,15 @@ module Furs
 			@payload = payload
 			@header = header
 			@key = key
-			@header[:alg] = @algorithm
+			@header[:alg] = @algorithm if @header.present?
 		end
 
 		def token
 			combine encoded_header_and_payload, encoded_signature
+		end
+
+		def zoi
+			Digest::MD5.hexdigest( sign @payload )
 		end
 
 		private
@@ -31,9 +35,12 @@ module Furs
 			@encoded_header_and_payload ||= combine encoded_header, encoded_payload
 		end
 
+		def sign str
+			@key.sign( OpenSSL::Digest.new(@algorithm.gsub('RS', 'sha')), str )	# sha256 = RS256!
+		end
+
 		def encoded_signature
-			signature = @key.sign( OpenSSL::Digest.new(@algorithm.gsub('RS', 'sha')), encoded_header_and_payload )	# sha256 = RS256!
-			@encoded_signature ||= encode64 signature
+			@encoded_signature ||= encode64( sign encoded_header_and_payload )
 		end
 
 		def encode64 str
