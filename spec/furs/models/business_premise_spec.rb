@@ -93,4 +93,8 @@ RSpec.describe Furs::Models::BusinessPremise do
 		data = business_premise.as_json
 		expect(data['TaxNumber']).to be_a_kind_of(Integer)
 	end
+
+	it 'is empty if no data is set (even though tax number is set by default)' do
+		expect(Furs::Models::BusinessPremise.new.empty?).to be(true)
+	end
 end

@@ -33,6 +33,10 @@ module Furs
 			def decimal_fields
 				super + %w(invoice_amount payment_amount returns_amount)
 			end
+
+			def autofilled
+				super + %w(tax_number)
+			end
 		end
 	end
 end

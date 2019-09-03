@@ -49,7 +49,7 @@ module Furs
 		    def empty?
 		    	self.instance_variables.all? do |attribute| 
 		    		val = self.instance_variable_get(attribute)
-		    		val.blank? || ( val.kind_of?(Array) && val.empty? ) || ( val.class < Furs::Models::BaseRequest && val.empty? )
+		    		val.blank? || is_autofilled?(attribute) || ( val.kind_of?(Array) && val.empty? ) || ( val.class < Furs::Models::BaseRequest && val.empty? )
 		    	end
 		    end
 
@@ -85,12 +85,20 @@ module Furs
 		    		[]
 		    	end
 
+		    	def autofilled
+						[]
+					end
+
 		    	def is_int? attr
-		    		int_fields.include? attr
+		    		int_fields.include? attr.to_s.gsub('@', '')
 		    	end
 
 		    	def is_decimal? attr
-		    		decimal_fields.include? attr
+		    		decimal_fields.include? attr.to_s.gsub('@', '')
+		    	end
+
+		    	def is_autofilled? attr
+		    		autofilled.include? attr.to_s.gsub('@', '')
 		    	end
 	    end
 	end

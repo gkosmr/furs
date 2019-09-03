@@ -93,4 +93,8 @@ RSpec.describe Furs::Models::BaseInvoice do
 		data = base_invoice.as_json
 		expect(data['PaymentAmount']).to be_a_kind_of(Float)
 	end
+
+	it 'is empty if no data is set (even though tax number is set by default)' do
+		expect(Furs::Models::BaseInvoice.new.empty?).to be(true)
+	end
 end

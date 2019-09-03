@@ -25,6 +25,10 @@ module Furs
 			def int_fields
 				super + %w(tax_number)
 			end
+
+			def autofilled
+				super + %w(tax_number)
+			end
 		end
 	end
 end
