@@ -16,12 +16,12 @@ module Furs
 				@invoice_identifier = Furs::Models::InvoiceIdentifier.new
 			end
 
-			def generate_zoi! p12
+			def generate_zoi!
 				if protected_i_d.blank? && tax_number.present? && issue_date_time.present? && invoice_identifier.present? && invoice_identifier.valid? && invoice_amount.present?
 					tmp = Time.parse issue_date_time
 					idt = tmp.strftime "%d.%m.%Y %H:%M:%S"	# must be in format: dd.mm.yyyy HH:MM:SS
 					payload = "#{tax_number}#{idt}#{invoice_identifier.invoice_number}#{invoice_identifier.business_premise_i_d}#{invoice_identifier.electronic_device_i_d}#{invoice_amount}"
-					@protected_i_d = Furs::Encoder.new(payload, nil, p12.key).zoi
+					@protected_i_d = Furs::Encoder.new(payload, nil, Furs.p12.key).zoi
 				end
 			end
 

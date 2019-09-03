@@ -26,7 +26,7 @@ module Furs
 		end
 
 		def issue_invoice data
-			data.invoice.generate_zoi!(p12) if data.invoice.present?
+			data.invoice.generate_zoi! if data.invoice.present?
 			signed_request INVOICE_PATH, data, Furs::Models::InvoiceResponse
 		end
 
@@ -75,7 +75,7 @@ module Furs
 			end
 
 			def p12
-				@p12 ||= OpenSSL::PKCS12.new File.read(config.certificate_path), config.certificate_password
+				@p12 ||= Furs.p12
 			end
 
 			def body payload

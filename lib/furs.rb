@@ -16,6 +16,10 @@ module Furs
 		end
 	end
 
+	def self.p12
+		@p12 ||= OpenSSL::PKCS12.new File.read(config.certificate_path), config.certificate_password
+	end
+
 	private
 	
 		def self.client

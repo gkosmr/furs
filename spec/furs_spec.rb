@@ -45,4 +45,9 @@ RSpec.describe Furs do
       end
     end
   end
+
+  it 'responds to p12 method that loads p12 certificate' do 
+    expect(Furs).to respond_to(:p12).with(0).arguments
+    expect(Furs.p12.class).to be(OpenSSL::PKCS12)
+  end
 end

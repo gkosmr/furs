@@ -76,4 +76,8 @@ RSpec.describe Furs::Models::Invoice do
 		expect(data['OperatorTaxNumber']).to eq(12312312)
 	end
 
+	it 'responds to generate_zoi! method' do
+		expect(build(:invoice)).to respond_to(:generate_zoi!).with(0).arguments
+	end
+
 end
