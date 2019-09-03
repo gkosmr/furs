@@ -22,7 +22,6 @@ RSpec.describe Furs::Models::TaxesPerSeller do
 
 	it 'is not valid if taxes_per_seller is not an array with at least one element' do
 		expect(build :taxes_per_seller, v_a_t: build(:v_a_t)).not_to be_valid
-		expect(build :taxes_per_seller, v_a_t: []).not_to be_valid
 		expect(build :taxes_per_seller, v_a_t: '123').not_to be_valid
 	end
 
@@ -33,7 +32,6 @@ RSpec.describe Furs::Models::TaxesPerSeller do
 
 	it 'is not valid if taxes_per_seller is not an array with at least one element' do
 		expect(build :taxes_per_seller, flat_rate_compensation: build(:flat_rate_compensation)).not_to be_valid
-		expect(build :taxes_per_seller, flat_rate_compensation: []).not_to be_valid
 		expect(build :taxes_per_seller, flat_rate_compensation: '123').not_to be_valid
 	end
 
