@@ -7,7 +7,7 @@ module Furs
 			validates :reference_invoice_issue_date_time, allow_blank: true, format: Furs::Constant::DATE_TIME_REGEX
 
 			def initialize
-				@reference_invoice_identifier = Furs::Models::InvoiceIdentifier.new
+				@reference_invoice_identifier = Furs::Models::ReferenceInvoiceIdentifier.new
 			end
 		end
 	end

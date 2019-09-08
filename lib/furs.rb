@@ -3,6 +3,7 @@ ruby_project_files = Dir[File.join(File.dirname(__FILE__), '**', '*.rb')]
 require 'furs/models/initializable_from_hash'
 require 'furs/models/base_request'
 require 'furs/models/base_response'
+require 'furs/models/sales_book_identifier'
 ruby_project_files.sort_by!{ |file_name| file_name.downcase }.each do |path|
 	require_relative path unless path.end_with?('furs/models/base_request')
 end
