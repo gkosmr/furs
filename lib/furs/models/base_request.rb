@@ -64,6 +64,8 @@ module Furs
 		    			tmp.to_i
 		    		elsif is_decimal? attr
 		    			tmp.to_f
+		    		elsif is_decimal? attr
+		    			[true, "true", 1, "1"].include?(attr)
 		    		else 
 		    			tmp.to_s
 		    		end
@@ -85,6 +87,10 @@ module Furs
 		    		[]
 		    	end
 
+		    	def boolean_fields
+		    		[]
+		    	end
+
 		    	def autofilled
 						[]
 					end
@@ -95,6 +101,10 @@ module Furs
 
 		    	def is_decimal? attr
 		    		decimal_fields.include? attr.to_s.gsub('@', '')
+		    	end
+
+		    	def is_boolean? attr
+		    		boolean_fields.include? attr.to_s.gsub('@', '')
 		    	end
 
 		    	def is_autofilled? attr

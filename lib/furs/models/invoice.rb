@@ -8,7 +8,7 @@ module Furs
 			validates :numbering_structure, presence: true, inclusion: { in: %w(B C) }
 			validates :invoice_identifier, presence: true
 			validates :operator_tax_number, allow_blank: true, length: { is: 8 }
-			validates :foreign_operator, :subsequent_submit, allow_blank: true, inclusion: { in: [0,1] }
+			validates :foreign_operator, :subsequent_submit, allow_blank: true, inclusion: { in: [true, false] }
 			validates :protected_i_d, presence: true, format: Furs::Constant::HEXADECIMAL_REGEX, length: { is: 32 }
 
 			def initialize
@@ -23,6 +23,10 @@ module Furs
 					payload = "#{tax_number}#{idt}#{invoice_identifier.invoice_number}#{invoice_identifier.business_premise_i_d}#{invoice_identifier.electronic_device_i_d}#{invoice_amount}"
 					@protected_i_d = Furs::Encoder.new(payload, nil, Furs.p12.key).zoi
 				end
+			end
+
+			def boolean_fields
+				super + %w(foreign_operator subsequent_submit)
 			end
 
 			def int_fields
