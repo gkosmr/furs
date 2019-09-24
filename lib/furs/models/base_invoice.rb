@@ -7,8 +7,8 @@ module Furs
 
 			validates :tax_number, presence: true, length: { is: 8 }, numericality: { only_integer: true }
 			validates :customer_v_a_t_number, allow_blank: true, length: 1..20
-			validates :invoice_amount, :payment_amount, presence: true, format: Furs::Constant::DECIMAL_REGEX, numericality: { less_than: 1000000000000 }
-			validates :returns_amount, allow_blank: true, format: Furs::Constant::DECIMAL_REGEX, numericality: { less_than: 1000000000000 }
+			validates :invoice_amount, :payment_amount, presence: true, format: Furs::Constant::DECIMAL_REGEX, numericality: { less_than: 1000000000000, greater_than: -1000000000000 }
+			validates :returns_amount, allow_blank: true, format: Furs::Constant::DECIMAL_REGEX, numericality: { less_than: 1000000000000, greater_than: -1000000000000 }
 			validates :taxes_per_seller, presence: true, length: { minimum: 1 }
 			validates :special_notes, allow_blank: true, length: 1..1000
 
