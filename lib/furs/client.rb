@@ -89,7 +89,9 @@ module Furs
 
 			def cert_store
 				cert_store = OpenSSL::X509::Store.new
-				cert_store.add_file(config.tls_ca_path)
+
+				cert = OpenSSL::X509::Certificate.new( File.read(config.tls_ca_path) )
+				cert_store.add_cert(cert)
 				# cert = OpenSSL::X509::Certificate.new(File.read(config.tls_cert_path))
 				# fail(Exceptions::CannotVerifyTls, 'Can\'t verify TLS CA') unless cert_store.verify(cert)
 				# cert_store.add_file(config.tls_cert_path)
