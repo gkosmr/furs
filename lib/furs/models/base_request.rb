@@ -19,7 +19,7 @@ module Furs
 	            		hsh.merge( key => tmp.map{ |el| to_val(el, attr) } )
 	            	else
 		            	val = to_val(tmp, attr)
-		            	val.blank? || %w(Root Errors).include?(key) || ( val.is_a?(Array) && val.length == 0 ) || ( tmp.class < Furs::Models::BaseRequest && tmp.empty? ) ? hsh : hsh.merge( key => val )
+		            	(!is_boolean?(attr) && val.blank?) || %w(Root Errors).include?(key) || ( val.is_a?(Array) && val.length == 0 ) || ( tmp.class < Furs::Models::BaseRequest && tmp.empty? ) ? hsh : hsh.merge( key => val )
 	            	end
 	            end
 
@@ -56,7 +56,9 @@ module Furs
 		    private
 
 		    	def to_val tmp, attr
-		    		if tmp.blank?
+		    		if is_boolean? attr
+		    			[true, "true", 1, "1"].include?(tmp)
+		    		elsif tmp.blank?
 		    			nil
 		    		elsif tmp.class < Furs::Models::BaseRequest 
 		    			tmp.as_json
@@ -64,8 +66,6 @@ module Furs
 		    			tmp.to_i
 		    		elsif is_decimal? attr
 		    			tmp.to_f
-		    		elsif is_boolean? attr
-		    			[true, "true", 1, "1"].include?(attr)
 		    		else 
 		    			tmp.to_s
 		    		end

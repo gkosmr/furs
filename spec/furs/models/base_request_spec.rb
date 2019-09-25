@@ -25,6 +25,22 @@ RSpec.describe Furs::Models::BaseRequest do
 		expect(data).not_to have_key("BusinessPremiseID")
 	end
 
+	it '#as_json correctly formats booleans' do
+		bp = build :invoice, subsequent_submit: true
+		data = bp.as_json
+		expect(data).to be_a_kind_of(Hash)
+		expect(data).to have_key("SubsequentSubmit")
+		expect(data["SubsequentSubmit"]).to eq(true)
+		expect(data["SubsequentSubmit"]).not_to eq("true")
+
+		bp = build :invoice, subsequent_submit: false
+		data = bp.as_json
+		expect(data).to be_a_kind_of(Hash)
+		expect(data).to have_key("SubsequentSubmit")
+		expect(data["SubsequentSubmit"]).to eq(false)
+		expect(data["SubsequentSubmit"]).not_to eq("false")
+	end
+
 	it '#as_json wraps it with root if not blank' do
 		data = build(:invoice_request).as_json
 		expect(data).to have_key('InvoiceRequest')
