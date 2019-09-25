@@ -64,7 +64,7 @@ module Furs
 		    			tmp.to_i
 		    		elsif is_decimal? attr
 		    			tmp.to_f
-		    		elsif is_decimal? attr
+		    		elsif is_boolean? attr
 		    			[true, "true", 1, "1"].include?(attr)
 		    		else 
 		    			tmp.to_s
