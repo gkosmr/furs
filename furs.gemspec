@@ -44,7 +44,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "factory_bot", "~> 5.0.2"
   spec.add_development_dependency "simplecov", "~> 0.17.0"
   
-  spec.add_dependency "json", "~> 2.2.0"
+  spec.add_dependency "json", ">= 2.2", "< 2.4"
   spec.add_dependency "httparty", "~> 0.17.0"
   spec.add_dependency "activesupport"
   spec.add_dependency "activemodel"
