@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", "~> 0.17.0"
   
   spec.add_dependency "json", "~> 2.2.0"
-  spec.add_dependency "httparty", "~> 0.17.0"
+  spec.add_dependency "httparty", ">= 0.17", "< 0.22"
   spec.add_dependency "activesupport"
   spec.add_dependency "activemodel"
 end
